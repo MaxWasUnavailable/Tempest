@@ -9,9 +9,13 @@ public static class SaveGameEvents
 
     public delegate void PostNewGameEventHandler(int saveSlot);
 
+    public delegate void PostSaveGameEventHandler(int saveSlot);
+
     public delegate void PreLoadGameEventHandler(int saveSlot, ref bool cancel);
 
     public delegate void PreNewGameEventHandler(int saveSlot, ref bool cancel);
+
+    public delegate void PreSaveGameEventHandler(int saveSlot, ref bool cancel);
 
     /// <summary>
     ///     Called before a new game is started. Can be cancelled.
@@ -55,5 +59,27 @@ public static class SaveGameEvents
     internal static void OnPostLoadGame(int saveSlot)
     {
         PostLoadGameEvent?.Invoke(saveSlot);
+    }
+
+    /// <summary>
+    ///     Called before a game is saved. Can be cancelled.
+    /// </summary>
+    public static event PreSaveGameEventHandler? PreSaveGameEvent;
+
+    internal static bool OnPreSaveGame(int saveSlot)
+    {
+        var cancel = false;
+        PreSaveGameEvent?.Invoke(saveSlot, ref cancel);
+        return cancel;
+    }
+
+    /// <summary>
+    ///     Called after a game is saved.
+    /// </summary>
+    public static event PostSaveGameEventHandler? PostSaveGameEvent;
+
+    internal static void OnPostSaveGame(int saveSlot)
+    {
+        PostSaveGameEvent?.Invoke(saveSlot);
     }
 }
