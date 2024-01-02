@@ -7,14 +7,17 @@ namespace Tempest;
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Tempest : BaseUnityPlugin
 {
-    private new static readonly ManualLogSource Logger = new(PluginInfo.PLUGIN_NAME);
-    internal static Tempest Instance { get; private set; }
-    private static Harmony Harmony { get; set; }
+    private new static ManualLogSource? Logger { get; set; }
+    internal static Tempest? Instance { get; private set; }
+    private static Harmony? Harmony { get; set; }
     private static bool IsPatched { get; set; }
 
     private void Awake()
     {
         Instance = this;
+
+        // Init logger
+        Logger = base.Logger;
 
         Harmony = new Harmony(PluginInfo.PLUGIN_GUID);
 
@@ -26,7 +29,7 @@ public class Tempest : BaseUnityPlugin
     public void PatchAll()
     {
         if (IsPatched) return;
-        Harmony.PatchAll();
+        Harmony!.PatchAll();
         IsPatched = true;
     }
 
