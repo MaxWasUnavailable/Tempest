@@ -5,16 +5,34 @@ namespace Tempest.Events;
 /// </summary>
 public static class SaveGameEvents
 {
+    /// <summary>
+    ///     Event handler for when a game is loaded.
+    /// </summary>
     public delegate void PostLoadGameEventHandler(int saveSlot);
 
+    /// <summary>
+    ///     Event handler for when a new game is started.
+    /// </summary>
     public delegate void PostNewGameEventHandler(int saveSlot);
 
+    /// <summary>
+    ///     Event handler for when a game is saved.
+    /// </summary>
     public delegate void PostSaveGameEventHandler(int saveSlot);
-
+    
+    /// <summary>
+    ///     Event handler for right before a game is loaded. Can be cancelled.
+    /// </summary>
     public delegate void PreLoadGameEventHandler(int saveSlot, ref bool cancel);
 
+    /// <summary>
+    ///     Event handler for right before a new game is started. Can be cancelled.
+    /// </summary>
     public delegate void PreNewGameEventHandler(int saveSlot, ref bool cancel);
 
+    /// <summary>
+    ///     Event handler for right before a game is saved. Can be cancelled.
+    /// </summary>
     public delegate void PreSaveGameEventHandler(int saveSlot, ref bool cancel);
 
     /// <summary>
