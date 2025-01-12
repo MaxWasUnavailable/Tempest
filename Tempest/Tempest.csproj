@@ -57,7 +57,7 @@
 
     <!-- Sailwind-specific Assembly References -->
     <ItemGroup>
-        <Reference Include="Assembly-CSharp" HintPath="$(SAILWIND_REFERENCES)\Assembly-CSharp.dll" Private="False"/>
+        <Reference Include="Assembly-CSharp" HintPath="$(SAILWIND_REFERENCES)\Assembly-CSharp.dll" Private="False" Publicize="True"/>
         <Reference Include="UnityEngine.CoreModule" HintPath="$(SAILWIND_REFERENCES)\UnityEngine.CoreModule.dll" Private="False"/>
     </ItemGroup>
 
