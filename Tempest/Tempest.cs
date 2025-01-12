@@ -6,7 +6,7 @@ using HarmonyLib;
 namespace Tempest;
 
 /// <summary>
-///    Main plugin class for Tempest.
+///     Main plugin class for Tempest.
 /// </summary>
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Tempest : BaseUnityPlugin
@@ -58,7 +58,7 @@ public class Tempest : BaseUnityPlugin
         }
     }
 
-    public void UnpatchAll()
+    private void UnpatchAll()
     {
         if (!IsPatched)
         {
