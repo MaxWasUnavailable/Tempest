@@ -14,7 +14,7 @@ internal static class StartMenuPatches
     {
         if (button != StartMenuButtonType.NewGame) return true;
         
-        return !SaveGameEvents.OnPreNewGame(SaveSlots.currentSlot);
+        return !SaveGameEvents.OnPreNewGame(ref SaveSlots.currentSlot);
     }
 
     [HarmonyPostfix]
@@ -23,6 +23,6 @@ internal static class StartMenuPatches
     {
         if (button != StartMenuButtonType.NewGame) return;
         
-        SaveGameEvents.OnPostNewGame(SaveSlots.currentSlot);
+        SaveGameEvents.OnPostNewGame(ref SaveSlots.currentSlot);
     }
 }

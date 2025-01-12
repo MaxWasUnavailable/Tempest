@@ -20,7 +20,7 @@ public static class SleepEvents
     /// <summary>
     ///     Event handler for when the player enters a bed.
     /// </summary>
-    public delegate void PostEnterBedEventHandler(Transform bed);
+    public delegate void PostEnterBedEventHandler(ref Transform bed);
 
     /// <summary>
     ///     Event handler for when the player leaves a bed.
@@ -45,7 +45,7 @@ public static class SleepEvents
     /// <summary>
     ///     Called before the player enters a bed. Can be cancelled.
     /// </summary>
-    public delegate void PreEnterBedEventHandler(Transform bed, ref bool cancel);
+    public delegate void PreEnterBedEventHandler(ref Transform bed, ref bool cancel);
 
     /// <summary>
     ///     Called before the player leaves a bed. Can be cancelled.
@@ -106,10 +106,10 @@ public static class SleepEvents
     /// </summary>
     public static event PreEnterBedEventHandler? PreEnterBedEvent;
     
-    internal static bool OnPreEnterBed(Transform bed)
+    internal static bool OnPreEnterBed(ref Transform bed)
     {
         var cancel = false;
-        PreEnterBedEvent?.Invoke(bed, ref cancel);
+        PreEnterBedEvent?.Invoke(ref bed, ref cancel);
         return cancel;
     }
 
@@ -118,9 +118,9 @@ public static class SleepEvents
     /// </summary>
     public static event PostEnterBedEventHandler? PostEnterBedEvent;
     
-    internal static void OnPostEnterBed(Transform bed)
+    internal static void OnPostEnterBed(ref Transform bed)
     {
-        PostEnterBedEvent?.Invoke(bed);
+        PostEnterBedEvent?.Invoke(ref bed);
     }
 
     /// <summary>

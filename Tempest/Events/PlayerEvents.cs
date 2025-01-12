@@ -8,12 +8,12 @@ public static class PlayerEvents
     /// <summary>
     ///     Event handler for when the player blacks out.
     /// </summary>
-    public delegate void PostBlackoutEventHandler(float targetAlpha, float duration);
+    public delegate void PostBlackoutEventHandler(ref float targetAlpha, ref float duration);
 
     /// <summary>
     ///     Event handler for right before a player blacks out. Can be cancelled.
     /// </summary>
-    public delegate void PreBlackoutEventHandler(float targetAlpha, float duration, ref bool cancel);
+    public delegate void PreBlackoutEventHandler(ref float targetAlpha, ref float duration, ref bool cancel);
 
     /// <summary>
     ///     Called after a player blacks out.
@@ -25,15 +25,15 @@ public static class PlayerEvents
     /// </summary>
     public static event PreBlackoutEventHandler? PreBlackoutEvent;
 
-    internal static void OnPostBlackout(float targetAlpha, float duration)
+    internal static void OnPostBlackout(ref float targetAlpha, ref float duration)
     {
-        PostBlackoutEvent?.Invoke(targetAlpha, duration);
+        PostBlackoutEvent?.Invoke(ref targetAlpha, ref duration);
     }
     
-    internal static bool OnPreBlackout(float targetAlpha, float duration)
+    internal static bool OnPreBlackout(ref float targetAlpha, ref float duration)
     {
         var cancel = false;
-        PreBlackoutEvent?.Invoke(targetAlpha, duration, ref cancel);
+        PreBlackoutEvent?.Invoke(ref targetAlpha, ref duration, ref cancel);
         return cancel;
     }
 }

@@ -10,15 +10,15 @@ internal static class BlackoutPatches
 {
     [HarmonyPrefix]
     [HarmonyPatch(nameof(Blackout.FadeTo))]
-    private static bool BlackoutFadeToPrefix(float targetAlpha, float duration)
+    private static bool BlackoutFadeToPrefix(ref float targetAlpha, ref float duration)
     {
-        return !PlayerEvents.OnPreBlackout(targetAlpha, duration);
+        return !PlayerEvents.OnPreBlackout(ref targetAlpha, ref duration);
     }
     
     [HarmonyPostfix]
     [HarmonyPatch(nameof(Blackout.FadeTo))]
-    private static void BlackoutFadeToPostfix(float targetAlpha, float duration)
+    private static void BlackoutFadeToPostfix(ref float targetAlpha, ref float duration)
     {
-        PlayerEvents.OnPostBlackout(targetAlpha, duration);
+        PlayerEvents.OnPostBlackout(ref targetAlpha, ref duration);
     }
 }

@@ -12,16 +12,16 @@ internal static class SleepPatches
 {
     [HarmonyPrefix]
     [HarmonyPatch(nameof(Sleep.EnterBed))]
-    private static bool SleepEnterBedPrefix(Transform bed)
+    private static bool SleepEnterBedPrefix(ref Transform bed)
     {
-        return SleepEvents.OnPreEnterBed(bed);
+        return SleepEvents.OnPreEnterBed(ref bed);
     }
     
     [HarmonyPostfix]
     [HarmonyPatch(nameof(Sleep.EnterBed))]
-    private static void SleepEnterBedPostfix(Transform bed)
+    private static void SleepEnterBedPostfix(ref Transform bed)
     {
-        SleepEvents.OnPostEnterBed(bed);
+        SleepEvents.OnPostEnterBed(ref bed);
     }
     
     [HarmonyPrefix]
