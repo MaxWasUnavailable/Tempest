@@ -23,14 +23,14 @@ internal static class SaveLoadManagerPatches
     }
     
     [HarmonyPrefix]
-    [HarmonyPatch("DoSaveGame")]
+    [HarmonyPatch(nameof(SaveLoadManager.DoSaveGame))]
     private static bool DoSaveGamePrefix()
     {
         return !SaveGameEvents.OnPreSaveGame(SaveSlots.currentSlot);
     }
     
     [HarmonyPostfix]
-    [HarmonyPatch("DoSaveGame")]
+    [HarmonyPatch(nameof(SaveLoadManager.DoSaveGame))]
     private static void DoSaveGamePostfix()
     {
         SaveGameEvents.OnPostSaveGame(SaveSlots.currentSlot);
