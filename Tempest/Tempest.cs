@@ -1,9 +1,13 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 
 namespace Tempest;
 
+/// <summary>
+///    Main plugin class for Tempest.
+/// </summary>
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Tempest : BaseUnityPlugin
 {
@@ -23,20 +27,50 @@ public class Tempest : BaseUnityPlugin
 
         PatchAll();
 
-        Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+        // Report plugin loaded
+        if (IsPatched)
+            Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+        else
+            Logger.LogError($"Plugin {PluginInfo.PLUGIN_GUID} failed to load correctly!");
     }
 
-    public void PatchAll()
+    private void PatchAll()
     {
-        if (IsPatched) return;
-        Harmony!.PatchAll();
-        IsPatched = true;
+        if (IsPatched)
+        {
+            Logger?.LogWarning("Already patched!");
+            return;
+        }
+
+        Logger?.LogDebug("Patching...");
+
+        Harmony ??= new Harmony(PluginInfo.PLUGIN_GUID);
+
+        try
+        {
+            Harmony.PatchAll();
+            IsPatched = true;
+            Logger?.LogDebug("Patched!");
+        }
+        catch (Exception e)
+        {
+            Logger?.LogError($"Failed to patch: {e}");
+        }
     }
 
     public void UnpatchAll()
     {
-        if (!IsPatched) return;
-        Harmony.UnpatchAll();
+        if (!IsPatched)
+        {
+            Logger?.LogWarning("Already unpatched!");
+            return;
+        }
+
+        Logger?.LogDebug("Unpatching...");
+
+        Harmony?.UnpatchSelf();
         IsPatched = false;
+
+        Logger?.LogDebug("Unpatched!");
     }
 }
