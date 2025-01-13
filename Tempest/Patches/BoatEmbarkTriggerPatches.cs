@@ -4,7 +4,7 @@ using Tempest.Events;
 namespace Tempest.Patches;
 
 
-[HarmonyPatch(typeof(BoatDamage))]
+[HarmonyPatch(typeof(BoatEmbarkTrigger))]
 [HarmonyPriority(Priority.First)]
 [HarmonyWrapSafe]
 internal static class BoatEmbarkTriggerPatches
