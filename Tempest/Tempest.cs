@@ -58,7 +58,7 @@ public class Tempest : BaseUnityPlugin
         }
     }
 
-    private void UnpatchAll()
+    private void UnpatchSelf()
     {
         if (!IsPatched)
         {
