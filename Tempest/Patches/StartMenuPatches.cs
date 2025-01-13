@@ -9,7 +9,7 @@ namespace Tempest.Patches;
 internal static class StartMenuPatches
 {
     [HarmonyPrefix]
-    [HarmonyPatch(nameof(StartMenu.ButtonClick))]
+    [HarmonyPatch(nameof(StartMenu.ButtonClick), typeof(StartMenuButtonType))]
     private static bool ButtonClickPrefix(StartMenuButtonType button)
     {
         if (button != StartMenuButtonType.NewGame) return true;
@@ -18,7 +18,7 @@ internal static class StartMenuPatches
     }
 
     [HarmonyPostfix]
-    [HarmonyPatch(nameof(StartMenu.ButtonClick))]
+    [HarmonyPatch(nameof(StartMenu.ButtonClick), typeof(StartMenuButtonType))]
     private static void ButtonClickPostfix(StartMenuButtonType button)
     {
         if (button != StartMenuButtonType.NewGame) return;
