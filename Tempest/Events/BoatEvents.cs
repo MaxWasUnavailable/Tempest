@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Tempest.Events;
 
 /// <summary>
@@ -131,5 +133,69 @@ public static class BoatEvents
     internal static void OnPostImpact()
     {
         PostImpactEvent?.Invoke();
+    }
+
+    /// <summary>
+    ///     Event handler for after all ropes are unmoored.
+    /// </summary>
+    public delegate void PostUnmoorAllRopesEventHandler();
+
+    /// <summary>
+    ///     Event handler for right before all ropes are unmoored. Can be cancelled.
+    /// </summary>
+    public delegate void PreUnmoorAllRopesEventHandler(ref bool cancel);
+
+    /// <summary>
+    ///     Event handler for after the closest rope is moored to a mooring.
+    /// </summary>
+    public delegate void PostMoorClosestRopeEventHandler(ref Transform mooring);
+
+    /// <summary>
+    ///     Event handler for right before the closest rope is moored to a mooring. Can be cancelled.
+    /// </summary>
+    public delegate void PreMoorClosestRopeEventHandler(ref Transform mooring, ref bool cancel);
+
+    /// <summary>
+    ///     Raised after all ropes are unmoored.
+    /// </summary>
+    public static event PostUnmoorAllRopesEventHandler? PostUnmoorAllRopesEvent;
+
+    /// <summary>
+    ///     Raised before all ropes are unmoored. Can be cancelled.
+    /// </summary>
+    public static event PreUnmoorAllRopesEventHandler? PreUnmoorAllRopesEvent;
+
+    /// <summary>
+    ///     Raised after the closest rope is moored to a mooring.
+    /// </summary>
+    public static event PostMoorClosestRopeEventHandler? PostMoorClosestRopeEvent;
+
+    /// <summary>
+    ///     Raised before the closest rope is moored to a mooring. Can be cancelled.
+    /// </summary>
+    public static event PreMoorClosestRopeEventHandler? PreMoorClosestRopeEvent;
+    
+    internal static void OnPostUnmoorAllRopes()
+    {
+        PostUnmoorAllRopesEvent?.Invoke();
+    }
+    
+    internal static bool OnPreUnmoorAllRopes()
+    {
+        var cancel = false;
+        PreUnmoorAllRopesEvent?.Invoke(ref cancel);
+        return cancel;
+    }
+    
+    internal static void OnPostMoorClosestRope(ref Transform mooring)
+    {
+        PostMoorClosestRopeEvent?.Invoke(ref mooring);
+    }
+    
+    internal static bool OnPreMoorClosestRope(ref Transform mooring)
+    {
+        var cancel = false;
+        PreMoorClosestRopeEvent?.Invoke(ref mooring, ref cancel);
+        return cancel;
     }
 }
