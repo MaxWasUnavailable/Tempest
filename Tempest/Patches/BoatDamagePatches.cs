@@ -6,7 +6,7 @@ namespace Tempest.Patches;
 [HarmonyPatch(typeof(BoatDamage))]
 [HarmonyPriority(Priority.First)]
 [HarmonyWrapSafe]
-internal static class BoatPatches
+internal static class BoatDamagePatches
 {
     [HarmonyPrefix]
     [HarmonyPatch(nameof(BoatDamage.Overflow))]
